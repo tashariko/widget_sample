@@ -21,6 +21,13 @@
             android:screenOrientation="portrait"/>
 
 
+        <service android:name=".WidgetUpdateService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="learn.tasha.widgetexample.widgetupdateservice.update_app_widget"/>
+            </intent-filter>
+        </service>
+
         <receiver android:name=".SampleAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
