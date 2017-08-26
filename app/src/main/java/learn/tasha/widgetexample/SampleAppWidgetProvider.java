@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 
 /**
@@ -17,6 +18,14 @@ public class SampleAppWidgetProvider extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
+        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        int width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+        RemoteViews remoteView;
+        if (width < 300) {
+            remoteView= getSinglePlantRemoteView(context, imgRes, plantId, showWater);
+        } else {
+            remoteView= getGardenGridRemoteView(context);
+        }
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_simple);
 
         Intent intent1 = new Intent(context, MainActivity.class);
