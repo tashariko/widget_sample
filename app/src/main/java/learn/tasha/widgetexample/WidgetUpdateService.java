@@ -14,7 +14,7 @@ import android.support.annotation.Nullable;
 public class WidgetUpdateService extends IntentService {
 
 
-    public static final String ACTION_UPDATE_PLANT_WIDGETS = "learn.tasha.widgetexample.widgetupdateservice.update_app_widget";
+    public static final String ACTION_UPDATE_APP_WIDGETS = "learn.tasha.widgetexample.widgetupdateservice.update_app_widget";
 
     public WidgetUpdateService() {
         super("WidgetUpdateService");
@@ -24,7 +24,7 @@ public class WidgetUpdateService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (ACTION_UPDATE_PLANT_WIDGETS.equals(action)) {
+            if (ACTION_UPDATE_APP_WIDGETS.equals(action)) {
                 handleActionUpdateAppWidgets();
             }
         }
@@ -42,7 +42,7 @@ public class WidgetUpdateService extends IntentService {
 
     public static void startActionUpdateAppWidgets(Context context) {
         Intent intent = new Intent(context, WidgetUpdateService.class);
-        intent.setAction(ACTION_UPDATE_PLANT_WIDGETS);
+        intent.setAction(ACTION_UPDATE_APP_WIDGETS);
         context.startService(intent);
     }
 }
