@@ -17,6 +17,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SecondActivity"
+            android:screenOrientation="portrait"/>
+
 
         <receiver android:name=".SampleAppWidgetProvider">
             <intent-filter>

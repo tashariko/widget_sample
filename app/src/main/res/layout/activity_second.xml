@@ -11,6 +11,6 @@
         android:textColor="#000"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:text="Welcome to First Activity"/>
+        android:text="Welcome to Second Activity"/>
 
 </RelativeLayout>

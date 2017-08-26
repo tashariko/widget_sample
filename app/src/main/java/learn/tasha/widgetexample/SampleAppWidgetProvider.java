@@ -17,16 +17,16 @@ public class SampleAppWidgetProvider extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        // Create an Intent to launch MainActivity when clicked
-        Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-
-        // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_simple);
-        // Widgets allow click handlers to only launch pending intents
-        views.setOnClickPendingIntent(R.id.widgetImageView, pendingIntent);
 
-        // Instruct the widget manager to update the widget
+        Intent intent1 = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent1 = PendingIntent.getActivity(context, 0, intent1, 0);
+        views.setOnClickPendingIntent(R.id.widgetImageView, pendingIntent1);
+
+        Intent intent2 = new Intent(context, SecondActivity.class);
+        PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
+        views.setOnClickPendingIntent(R.id.clickTextView, pendingIntent2);
+
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
