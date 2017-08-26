@@ -6,6 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/titleTextView"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#f0fff0"
+        android:text="Change the Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ImageView
         android:id="@+id/widgetImageView"
         android:layout_gravity="center_horizontal"

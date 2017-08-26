@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RemoteViews;
 
 /**
@@ -24,15 +25,27 @@ public class SampleAppWidgetProvider extends AppWidgetProvider {
         if (width < 300) {
             remoteView= getViewForSmallerWidget(context);
         } else {
-            remoteView= getViewForBiggerWidget(context);
+            remoteView= getViewForBiggerWidget(context,options);
         }
         appWidgetManager.updateAppWidget(appWidgetId, remoteView);
 
     }
 
-    private static RemoteViews getViewForBiggerWidget(Context context) {
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_white_simple);
+    private static RemoteViews getViewForBiggerWidget(Context context, Bundle options) {
 
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.layout_widget_white_simple);
+        int minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+        if (minHeight < 100) {
+            views.setViewVisibility(R.id.titleTextView, View.GONE);
+        }else{
+            views.setViewVisibility(R.id.titleTextView, View.VISIBLE);
+
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.putExtra("text","Coming from the Widget title click.");
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            views.setOnClickPendingIntent(R.id.titleTextView, pendingIntent);
+        }
         Intent intent1 = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent1 = PendingIntent.getActivity(context, 0, intent1, 0);
         views.setOnClickPendingIntent(R.id.widgetImageView, pendingIntent1);
