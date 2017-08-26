@@ -46,13 +46,13 @@ public class SampleAppWidgetProvider extends AppWidgetProvider {
 
             views.setOnClickPendingIntent(R.id.titleTextView, pendingIntent);
         }
-        Intent intent1 = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent1 = PendingIntent.getActivity(context, 0, intent1, 0);
-        views.setOnClickPendingIntent(R.id.widgetImageView, pendingIntent1);
 
-        Intent intent2 = new Intent(context, SecondActivity.class);
-        PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 0, intent2, 0);
-        views.setOnClickPendingIntent(R.id.clickTextView, pendingIntent2);
+        Intent intent = new Intent(context, ListViewWidgetService.class);
+        views.setRemoteAdapter(R.id.listView, intent);
+
+        Intent appIntent = new Intent(context, SecondActivity.class);
+        PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.listView, appPendingIntent);
 
         return views;
     }
@@ -81,13 +81,20 @@ public class SampleAppWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        WidgetUpdateService.startActionUpdateAppWidgets(context);
+        WidgetUpdateService.startActionUpdateAppWidgets(context,false);
     }
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
                                           int appWidgetId, Bundle newOptions) {
-        WidgetUpdateService.startActionUpdateAppWidgets(context);
+
+        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        int width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+        if(width<300) {
+            WidgetUpdateService.startActionUpdateAppWidgets(context,false);
+        }else{
+            WidgetUpdateService.startActionUpdateAppWidgets(context,true);
+        }
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 

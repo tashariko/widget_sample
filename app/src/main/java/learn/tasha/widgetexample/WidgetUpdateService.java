@@ -15,6 +15,7 @@ public class WidgetUpdateService extends IntentService {
 
 
     public static final String ACTION_UPDATE_APP_WIDGETS = "learn.tasha.widgetexample.widgetupdateservice.update_app_widget";
+    public static final String ACTION_UPDATE_LIST_VIEW = "learn.tasha.widgetexample.widgetupdateservice.update_app_widget_list";
 
     public WidgetUpdateService() {
         super("WidgetUpdateService");
@@ -26,8 +27,22 @@ public class WidgetUpdateService extends IntentService {
             final String action = intent.getAction();
             if (ACTION_UPDATE_APP_WIDGETS.equals(action)) {
                 handleActionUpdateAppWidgets();
+            }else if(ACTION_UPDATE_LIST_VIEW.equals(action)){
+                handleActionUpdateListView();
             }
         }
+    }
+
+    private void handleActionUpdateListView() {
+        WidgetDataModel.createSampleDataForWidget(getApplicationContext());
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, SampleAppWidgetProvider.class));
+
+        SampleAppWidgetProvider.updateAllAppWidget(this, appWidgetManager,appWidgetIds);
+
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.listView);
+
     }
 
     private void handleActionUpdateAppWidgets() {
@@ -40,9 +55,14 @@ public class WidgetUpdateService extends IntentService {
         SampleAppWidgetProvider.updateAllAppWidget(this, appWidgetManager,appWidgetIds);
     }
 
-    public static void startActionUpdateAppWidgets(Context context) {
+    public static void startActionUpdateAppWidgets(Context context, boolean forListView) {
         Intent intent = new Intent(context, WidgetUpdateService.class);
-        intent.setAction(ACTION_UPDATE_APP_WIDGETS);
+        if(forListView){
+            intent.setAction(ACTION_UPDATE_LIST_VIEW);
+        }else {
+            intent.setAction(ACTION_UPDATE_APP_WIDGETS);
+        }
         context.startService(intent);
     }
+
 }

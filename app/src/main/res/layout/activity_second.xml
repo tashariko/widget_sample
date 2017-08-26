@@ -5,6 +5,7 @@
     android:background="#f0f0f0">
 
     <TextView
+        android:id="@+id/centerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -12,5 +13,28 @@
         android:textStyle="bold"
         android:textSize="18sp"
         android:text="Welcome to Second Activity"/>
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:text=""
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/centerTextView"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/subTitleTextView"
+            android:text=""
+            android:textColor="#696969"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/titleTextView"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
 </RelativeLayout>
